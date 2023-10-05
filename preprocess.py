@@ -54,8 +54,13 @@ def dummies(df):
 
 def xy_split(df):
     
-    return df.drop(columns= 'default'), df.default
-
+    x = df.drop(columns= 'default') 
+    y = df.default
+    
+    x = scale(x)
+    x = dummies(x)
+    
+    return x, y
 
 
 def scale(df):
