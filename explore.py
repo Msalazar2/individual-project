@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy import stats
+from scipy.stats import pearsonr
 
 
 def plt_dist(df, feats, loop = False):
@@ -191,3 +192,11 @@ def t_test(df, feature):
         print("We reject the null hypothesis.")
     else:
         print("We fail to reject the null hypothesis.")
+        
+        
+        
+def corr(df, target, feature):
+    
+    corr, p_value = pearsonr(df['target'], df['feature'])
+    
+    print(corr, p_value)
