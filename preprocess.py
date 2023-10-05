@@ -46,9 +46,7 @@ def get_discrete_feats(df):
 
 def dummies(df):
 
-    cat_cols = get_discrete_feats(df)
-
-    df[cat_cols] = pd.get_dummies(df[cat_cols])
+    df = pd.get_dummies(df)
     
     return df
 

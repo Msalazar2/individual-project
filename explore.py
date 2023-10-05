@@ -1,7 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+from scipy import stats
 
 
 def plt_dist(df, feats, loop = False):
@@ -44,8 +44,8 @@ def bin_data(df):
     df['credit_bin'] = pd.cut(df['credit_score'], bins=credit_bins, labels = credit_labels, right= False)
 
 
-    age_bins = [18, 26, 30, 36, 40, 46, 50, 56, 60, 66, 70]
-    age_labels = ['18-25', '26-29', '30-35', '36-39', '40-45', '46-49', '50-55', '56-59', '60-65', '66-69']
+    age_bins = [18, 26, 30, 36, 40, 46, 50, 56, 60, 70]
+    age_labels = ['18-25', '26-29', '30-35', '36-39', '40-45', '46-49', '50-55', '56-59', '60-69']
 
     # Create a new column 'Age_Bin' by assigning data points to bins
     df['age_bin'] = pd.cut(df['age'], bins=age_bins, labels = age_labels, right= False)
@@ -165,5 +165,29 @@ def plt_3(df):
     plt.yticks([])
     plt.ylabel('')
     plt.xlabel('Loan Amounts')
-    plt.title(' Average Defaults')# Question : Does interest rate drive default?
+    plt.title(' Average Defaults')
     plt.show()
+    
+    
+    
+def t_test(df, feature):
+
+    a = .5
+
+    # an array of all observed values of the subgroup
+    default_sample = df[df.default == 1][feature]
+
+    # the population mean
+    overall_mean = df[feature].mean()
+
+    t, p = stats.ttest_1samp(default_sample, overall_mean)
+
+    print(f'a = {a}')
+    print(f't = {t}')
+    print(f'p = {p}')
+    print('')
+
+    if p < a:
+        print("We reject the null hypothesis.")
+    else:
+        print("We fail to reject the null hypothesis.")
