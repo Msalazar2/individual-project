@@ -2,8 +2,6 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
 
-
-
 def get_continuous_feats(df):
     '''
     find all continuous numerical features
@@ -21,7 +19,6 @@ def get_continuous_feats(df):
             num_cols.append(col)
     
     return num_cols
-
 
 
 def get_discrete_feats(df):
@@ -43,7 +40,6 @@ def get_discrete_feats(df):
     return cat_cols
 
 
-
 def dummies(df):
 
     df = pd.get_dummies(df)
@@ -51,10 +47,20 @@ def dummies(df):
     return df
 
 
-
 def xy_split(df):
     
     x = df.drop(columns= 'default') 
+    y = df.default
+    
+    x = scale(x)
+    x = dummies(x)
+    
+    return x, y
+
+
+def xy_split2(df):
+    
+    x = df 
     y = df.default
     
     x = scale(x)
